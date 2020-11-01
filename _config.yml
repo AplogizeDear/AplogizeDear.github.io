@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
+title: 回不到昨天
+subtitle: '我有故事，你有酒吗'
 description: '不惟有超世之才，亦必有坚韧不拔之志'
 keywords:
 author: 张强
@@ -100,9 +100,26 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: next
 
+# plugins: hexo-generate-feed
+
+# rss配置
+# feed:
+#   type: atom
+#   path: atom.xml
+#   limit: 20
+#   hub:
+#   content:
+#   content_limit: 140
+#   content_limit_delim: ' '
+#   order_by: -date
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+  
+
+
+
   
