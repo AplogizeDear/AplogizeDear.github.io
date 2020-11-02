@@ -117,7 +117,7 @@ darkmode: false
 # External url should start with http:// or https://
 menu:
   home: / || fa fa-home
-  Knowledge: /Knowledge ||fa fa-spa
+  knowledge: /knowledge/ ||fa fa-spa
   read: /read || fa fa-book-reader
   travel: /travel || fa fa-plane-departure
   about: /about/ || fa fa-user
