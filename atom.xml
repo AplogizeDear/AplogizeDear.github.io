@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2020-11-02T14:37:05.288Z</updated>
+  <updated>2020-11-02T16:53:47.580Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,86 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>git命令</title>
+    <link href="http://example.com/2020/11/02/git/"/>
+    <id>http://example.com/2020/11/02/git/</id>
+    <published>2020-11-02T23:04:12.000Z</published>
+    <updated>2020-11-02T16:53:47.580Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>工作了很久，总结一下自己经常用到的命令，拓展一下不知道的git命令</p><p>常用命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">git add .   (添加所有文件到缓存区)</span><br><span class="line">git commit -m &#39;你的描述&#39; （提交暂存区到仓库区）</span><br><span class="line">git push &#39;你要提交的分支代码&#39; （提交代码到远程）</span><br><span class="line"></span><br><span class="line">git remote -v 查看远程仓库</span><br><span class="line"></span><br><span class="line">git branch -a  查看所有分支</span><br><span class="line"></span><br><span class="line">git checkout -b &#39;分支&#39;   建立一个分支，并且切换到新建的分支</span><br><span class="line"></span><br><span class="line">git checkout &#39;分支&#39;  切换到某个已经有的分支</span><br><span class="line"></span><br><span class="line">git merge &#39;分支&#39;  将分支代码合并到当前工作的分支</span><br><span class="line"></span><br><span class="line">git status  查看当前状态</span><br><span class="line"></span><br><span class="line">git fetch [remote]  下载远程仓库的所有变动</span><br></pre></td></tr></table></figure><p>以上就是经常用到的git命令</p></li><li><p>学一些不常用的</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//分支</span><br><span class="line">git branch [branch-name]  新建一个分支，但是还停留在当前分支</span><br><span class="line">git branch -r   列出所有远程分支</span><br><span class="line"></span><br><span class="line">// 删除</span><br><span class="line">git branch -d [branch-name]  删除本地分支</span><br><span class="line">git push origin --delete [branch-name]  删除远程分支</span><br><span class="line"></span><br><span class="line">// 查看</span><br><span class="line">git shortlog -sn    查看所有提交过代码的人，按照提交次数排序</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">撤销</span><br><span class="line">git reset [commit]  重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变</span><br><span class="line"></span><br><span class="line">git reset --hard [commit]   同时重置暂存区和工作区，与指定commit一致</span><br><span class="line"> </span><br></pre></td></tr></table></figure></li><li><p>大多数公司在提交的时候会设置上传的eslint检测，其实这个就是代码提交规范，涉及到了git，在这里写一下。作用嘛就是有利于快速查找到某个版本</p><p>3.1 一般是 <strong>git commit -m ‘feat:做了什么样子的功能’</strong>  其他的类似</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">公式：&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br><span class="line"></span><br><span class="line">feat：新功能（feature）</span><br><span class="line">fix：修补bug</span><br><span class="line">docs：文档（documentation）</span><br><span class="line">style： 格式（不影响代码运行的变动）</span><br><span class="line">refactor：重构（即不是新增功能，也不是修改bug的代码变动）</span><br><span class="line">test：增加测试</span><br><span class="line">chore：构建过程或辅助工具的变动</span><br></pre></td></tr></table></figure><h6 id="3-2-项目中使用"><a href="#3-2-项目中使用" class="headerlink" title="3.2 项目中使用"></a>3.2 项目中使用</h6><p><code>validate-commit-msg</code>  来检查项目中 <code>Commit message</code> 是否规范。</p><ol><li><pre><code>npm install --save-dev validate-commit-msg<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 方式一：建立 &#96;.vcmrc&#96; 文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>&#123;  &quot;types&quot;: [&quot;feat&quot;, &quot;fix&quot;, &quot;docs&quot;, &quot;style&quot;, &quot;refactor&quot;, &quot;perf&quot;, &quot;test&quot;, &quot;build&quot;, &quot;ci&quot;, &quot;chore&quot;, &quot;revert&quot;],  &quot;scope&quot;: &#123;    &quot;required&quot;: false,    &quot;allowed&quot;: [&quot;*&quot;],    &quot;validate&quot;: false,    &quot;multiple&quot;: false  &#125;,  &quot;warnOnFail&quot;: false,  &quot;maxSubjectLength&quot;: 100,  &quot;subjectPattern&quot;: &quot;.+&quot;,  &quot;subjectPatternErrorMsg&quot;: &quot;subject does not match subject pattern!&quot;,  &quot;helpMessage&quot;: &quot;&quot;,  &quot;autoFix&quot;: false&#125;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 使用方式二：写入 &#96;package.json&#96;</span><br><span class="line"></span><br></pre></td></tr></table></figure>&#123;  &quot;config&quot;: &#123;    &quot;validate-commit-msg&quot;: &#123;      /* your config here */    &#125;  &#125;&#125;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. &#96;validate-commit-msg&#96; 插件地址</span><br><span class="line"></span><br><span class="line">   https:&#x2F;&#x2F;github.com&#x2F;conventional-changelog-archived-repos&#x2F;validate-commit-msg</span><br><span class="line"></span><br><span class="line">5. ghooks 钩子</span><br><span class="line"></span><br></pre></td></tr></table></figure>&#123;  …  &quot;config&quot;: &#123;    &quot;ghooks&quot;: &#123;      &quot;pre-commit&quot;: &quot;gulp lint&quot;,      &quot;commit-msg&quot;: &quot;validate-commit-msg&quot;,      &quot;pre-push&quot;: &quot;make test&quot;,      &quot;post-merge&quot;: &quot;npm install&quot;,      &quot;post-rewrite&quot;: &quot;npm install&quot;,      …    &#125;  &#125;  …&#125;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. ###### 生成 Change log</span><br><span class="line"></span><br></pre></td></tr></table></figure>npm install -g conventional-changelogcd jartto-domoconventional-changelog -p angular -i CHANGELOG.md -w<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">为了方便使用，可以将其写入 &#96;package.json&#96; 的 &#96;scripts&#96; 字段。</span><br><span class="line"></span><br></pre></td></tr></table></figure>&#123;  &quot;scripts&quot;: &#123;    &quot;changelog&quot;: &quot;conventional-changelog -p angular -i CHANGELOG.md -w -r 0&quot;  &#125;&#125;npm run changelog</code></pre></li></ol></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;工作了很久，总结一下自己经常用到的命令，拓展一下不知道的git命令&lt;/p&gt;
+&lt;p&gt;常用命令&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class</summary>
+      
+    
+    
+    
+    <category term="知识" scheme="http://example.com/categories/%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="git使用" scheme="http://example.com/tags/git%E4%BD%BF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>homebrew使用</title>
+    <link href="http://example.com/2020/11/02/homebrew/"/>
+    <id>http://example.com/2020/11/02/homebrew/</id>
+    <published>2020-11-02T22:29:04.000Z</published>
+    <updated>2020-11-02T16:53:47.580Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><h5 id="附上homeBrew的官方链接"><a href="#附上homeBrew的官方链接" class="headerlink" title="附上homeBrew的官方链接"></a>附上homeBrew的官方链接</h5><p><a href="https://brew.sh/index_zh-cn">https://brew.sh/index_zh-cn</a></p></li><li><h5 id="安装homeBrew"><a href="#安装homeBrew" class="headerlink" title="安装homeBrew"></a>安装homeBrew</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;bin&#x2F;bash -c &quot;$(curl -fsSL https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;Homebrew&#x2F;install&#x2F;master&#x2F;install.sh)&quot;</span><br></pre></td></tr></table></figure></li><li><h5 id="使用Homebrew-安装-你的mac没有预装但你需要的东西，如果想要安装应用要用下面那条命令哦"><a href="#使用Homebrew-安装-你的mac没有预装但你需要的东西，如果想要安装应用要用下面那条命令哦" class="headerlink" title="使用Homebrew 安装 你的mac没有预装但你需要的东西，如果想要安装应用要用下面那条命令哦"></a>使用Homebrew 安装 你的mac没有预装但你需要的东西，如果想要安装应用要用下面那条命令哦</h5><p>比如：brew install wget</p><p>​            brew install git</p><p>wget：用来下载文件的。可以控制下载文件的进度，比较稳定。</p><p>基本上不会丢包，有些网站只有专门的代理才可以下载，相信wget可以帮到你。</p></li><li><h5 id="用brew-cask-安装应用"><a href="#用brew-cask-安装应用" class="headerlink" title="用brew cask 安装应用"></a>用brew cask 安装应用</h5><p>Brew cask 安装</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install  brew-cask </span><br></pre></td></tr></table></figure><p>比如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew cask install firefox</span><br><span class="line">brew cask install qq</span><br></pre></td></tr></table></figure></li><li><h4 id="什么？homebrew安装很慢！！"><a href="#什么？homebrew安装很慢！！" class="headerlink" title="什么？homebrew安装很慢！！"></a>什么？homebrew安装很慢！！</h4><p>清华大学有个镜像，可以换成这个。</p><p><a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/">https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/</a></p></li></ol><p>   这是另一篇教程<a href="https://juejin.im/post/6850418117194022919">https://juejin.im/post/6850418117194022919</a></p><p>   简单概述为</p>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd &quot;$(brew --repo)&quot;</span><br><span class="line">git remote set-url origin https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;git&#x2F;homebrew&#x2F;brew.git</span><br><span class="line">cd &quot;$(brew --repo)&#x2F;Library&#x2F;Taps&#x2F;homebrew&#x2F;homebrew-core&quot;</span><br><span class="line">git remote set-url origin https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;git&#x2F;homebrew&#x2F;homebrew-core.git</span><br><span class="line"></span><br><span class="line">brew update</span><br></pre></td></tr></table></figure><p>   这里有个一个命令解决下载缓慢的问题</p>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;bin&#x2F;zsh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;gitee.com&#x2F;cunkai&#x2F;HomebrewCN&#x2F;raw&#x2F;master&#x2F;Homebrew.sh)&quot;</span><br></pre></td></tr></table></figure><p>   在你的mac终端跑一下就可以了，时间可能比较长。</p><ol start="6"><li><h4 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;bin&#x2F;zsh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;gitee.com&#x2F;cunkai&#x2F;HomebrewCN&#x2F;raw&#x2F;master&#x2F;HomebrewUninstall.sh)&quot;</span><br></pre></td></tr></table></figure></li><li><p>实在不会安装了</p><p><a href="https://zhuanlan.zhihu.com/p/111014448">https://zhuanlan.zhihu.com/p/111014448</a></p></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;&lt;h5 id=&quot;附上homeBrew的官方链接&quot;&gt;&lt;a href=&quot;#附上homeBrew的官方链接&quot; class=&quot;headerlink&quot; title=&quot;附上homeBrew的官方链接&quot;&gt;&lt;/a&gt;附上homeBrew的官方链接&lt;/h5&gt;&lt;p&gt;&lt;a href=&quot;</summary>
+      
+    
+    
+    
+    <category term="知识" scheme="http://example.com/categories/%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="homebrew" scheme="http://example.com/tags/homebrew/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读书一角</title>
+    <link href="http://example.com/2020/11/02/123/"/>
+    <id>http://example.com/2020/11/02/123/</id>
+    <published>2020-11-02T20:59:23.000Z</published>
+    <updated>2020-11-02T16:53:47.580Z</updated>
+    
+    <content type="html"><![CDATA[<p>自动构建失败了？</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;自动构建失败了？&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+    <category term="读书名言" scheme="http://example.com/tags/%E8%AF%BB%E4%B9%A6%E5%90%8D%E8%A8%80/"/>
+    
+  </entry>
+  
+  <entry>
     <title>博客板块分类遐想</title>
     <link href="http://example.com/2020/11/02/index/"/>
     <id>http://example.com/2020/11/02/index/</id>
-    <published>2020-11-02T14:37:05.288Z</published>
-    <updated>2020-11-02T14:37:05.288Z</updated>
+    <published>2020-11-02T16:53:47.580Z</published>
+    <updated>2020-11-02T16:53:47.580Z</updated>
     
     <content type="html"><![CDATA[<h4 id="博客名"><a href="#博客名" class="headerlink" title="博客名"></a>博客名</h4><p>能文能武小小菜：文能妙笔生花，武能妙手码代码。和我的公众号一摸一样的。</p><h4 id="副标题"><a href="#副标题" class="headerlink" title="副标题"></a>副标题</h4><p>   考虑了三个，以下</p><ol><li><p>广积粮，缓称王</p></li><li><p>Never give uo！</p></li><li><p>临渊羡鱼，不如退而结网</p><p>第一个想着是积累各种软硬技能，然后向着目标奔发。第二个是英文，永不放弃，有点装的意思，哈哈。第三个，与其羡慕别人比你强。不如想着如何为实现这个目标积蓄力量。都挺好。但是，暂时选了第二个。</p></li></ol><h4 id="博客板块分类"><a href="#博客板块分类" class="headerlink" title="博客板块分类"></a>博客板块分类</h4><h5 id="知识板块"><a href="#知识板块" class="headerlink" title="知识板块"></a>知识板块</h5><p>​    这一板块打算写自己的硬性技能，比如说 javascript、计算机网络、数据结构、算法、Vue、React相关的知识。以及平时工作碰到的问题，以及解决方案。将会在这里持续更新。或许在文章逐渐多起来的时候，再做个分类</p><h5 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h5><p>​    这一板块会写一些平时的一些感悟和想法。或许是想到什么写什么！</p><h5 id="读书一角"><a href="#读书一角" class="headerlink" title="读书一角"></a>读书一角</h5><p>​    这一板块会写平时阅读过的书，我想小说也是可以的。比如说《雪中悍刀行》《剑来》之类的。书籍目录放在这里也行。《javascript高级程序设计》 《你所不知道的js全三册》《失控》《百年孤独》《霍乱时期的爱情》《如何阅读一本书》《影响力》《放风筝的人》《不能承受的生命之轻》《人性的弱点》《影响力》《墨菲定律》《人类简史》《人格心理学》《自私的基因》《娱乐至死》《平凡的世界》《原则》《穷爸爸富爸爸系列图书》。随着阅读记录会持续更新的。</p><h5 id="人在职场"><a href="#人在职场" class="headerlink" title="人在职场"></a>人在职场</h5><p>​    这一板块，准备写一些跟同事在一起所碰到的各种各样的事情。文中的名字肯定不会以真名的形似出现。所以大家放心好了。你的名字肯定不会出现在上面的。</p><h5 id="旅行"><a href="#旅行" class="headerlink" title="旅行"></a>旅行</h5><p>​    虽然去过的地方不是很多。但是有些地方你所看见的你一处景色真的让人流连忘返。所以也是可以记录一下的。</p><h5 id="感情"><a href="#感情" class="headerlink" title="感情"></a>感情</h5><p>​    这一板块东西不会太多的。因为会涉及自己的隐私。这个板块的东西只会出现在我的日记里。后期如果没有的话，这个板块应该会删除。</p><h5 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h5><p>​    是对这些文章模块的统计</p><h5 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h5><p>​    暂时没想好写什么。先放着。预留了一些板块。工作附带学车篇、LOL篇、buy篇、小说篇 、有想写小说的意思，哈哈，也有这个一个构想。再想想。自我推销篇、电商模式篇、吉他学习 乐理篇？这个真的好难坚持，这个从小就得学习。弹的手有点疼。后面如果有的话再加吧。</p><p>​    </p><p>​    </p>]]></content>
     
