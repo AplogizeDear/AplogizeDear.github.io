@@ -119,6 +119,7 @@ menu:
   home: / || fa fa-home
   knowledge: /knowledge/ ||fa fa-spa
   read: /read || fa fa-book-reader
+  随笔: /essay   || fa fa-pencil-alt
   travel: /travel || fa fa-plane-departure
   about: /about/ || fa fa-user
   tags: /tags/ || fa fa-tags
@@ -182,8 +183,9 @@ site_state: true
 social:
   GitHub: https://github.com/AplogizeDear || fab fa-github
   E-Mail: mailto:zq669404@gmail.com || fa fa-envelope
-  #Weibo: https://weibo.com/yourname || fab fa-weibo
-  #Google: https://plus.google.com/yourname || fab fa-google
+  公众号: https://mp.weixin.qq.com/s/Vr-D2tbDuezTHNwagD-O1w || fab fa-weixin
+  Weibo: https://weibo.com/2231532131/profile?topnav=1&wvr=6 || fab fa-weibo
+  # Google: https://plus.google.com/yourname || fab fa-google
   #Twitter: https://twitter.com/yourname || fab fa-twitter
   #FB Page: https://www.facebook.com/yourname || fab fa-facebook
   #StackOverflow: https://stackoverflow.com/yourname || fab fa-stack-overflow
@@ -280,7 +282,7 @@ reward:
 follow_me:
   #Twitter: https://twitter.com/username || fab fa-twitter
   #Telegram: https://t.me/channel_name || fab fa-telegram
-  WeChat: /images/wechat_channel.jpg || fab fa-weixin
+  WeChat: https://mp.weixin.qq.com/s/Vr-D2tbDuezTHNwagD-O1w || fab fa-weixin
   RSS: /atom.xml || fa fa-rss
 
 # Related popular posts
