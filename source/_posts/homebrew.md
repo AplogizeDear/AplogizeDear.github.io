@@ -41,6 +41,15 @@ tag: homebrew
    brew cask install qq
    ```
 
+   更新
+
+   ```
+   brew cask outdated  列出需要更新的软件
+   
+   brew cask install --force <outdated-cask>
+
+   ```
+
 5. #### 什么？homebrew安装很慢！！
 
    清华大学有个镜像，可以换成这个。
