@@ -12,7 +12,7 @@ tags: 知识
 
 #### 关于javascript
 
-​	Javascript是一门单线程语言，所有的多线程都是通过单线程模拟出来的111
+​	Javascript是一门单线程语言，所有的多线程都是通过单线程模拟出来的333
 
 #### javascript 事件循环
 
