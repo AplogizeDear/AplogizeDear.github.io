@@ -184,7 +184,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/26/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/12/javascrit%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -198,7 +198,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/26/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">图片测试</a>
+            <a href="/2021/08/12/javascrit%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">javascrit事件循环机制</a>
         </h2>
 
         <div class="post-meta">
@@ -209,7 +209,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-03-26 17:38:38 / 修改时间：09:55:21" itemprop="dateCreated datePublished" datetime="2021-03-26T17:38:38+00:00">2021-03-26</time>
+              <time title="创建时间：2021-08-12 11:46:42 / 修改时间：06:55:38" itemprop="dateCreated datePublished" datetime="2021-08-12T11:46:42+00:00">2021-08-12</time>
             </span>
 
           
@@ -223,9 +223,90 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <img src="/2021/03/26/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/butiful.jpeg" class="" title="This is an example image">
+          <h2 id="8月12号"><a href="#8月12号" class="headerlink" title="8月12号"></a>8月12号</h2><h3 id="JavaScript执行机制"><a href="#JavaScript执行机制" class="headerlink" title="JavaScript执行机制"></a>JavaScript执行机制</h3><h4 id="关于javascript"><a href="#关于javascript" class="headerlink" title="关于javascript"></a>关于javascript</h4><p>​    Javascript是一门单线程语言，所有的多线程都是通过单线程模拟出来的333</p>
+<h4 id="javascript-事件循环"><a href="#javascript-事件循环" class="headerlink" title="javascript 事件循环"></a>javascript 事件循环</h4><ol>
+<li>同步任务</li>
+<li>异步任务</li>
+</ol>
+<p>同步和异步任务分别进入不同的执行”场所”，同步的进入主线程，异步的进入Event Table并注册函数。</p>
+<p>当指定的事情完成时，Event Table会将这个函数移入Event Queue。</p>
+<p>主线程内的任务执行完毕为空，会去Event Queue读取对应的函数，进入主线程执行。</p>
+<p>上述过程会不断重复，也就是常说的Event Loop(事件循环)。</p>
+<h4 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout"></a>setTimeout</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    task()</span><br><span class="line">&#125;,<span class="number">3000</span>)</span><br><span class="line"></span><br><span class="line">sleep(<span class="number">10000000</span>)</span><br></pre></td></tr></table></figure>
 
-<img src="/2021/03/26/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/butifuln.jpeg" class="" title="This is an example image">
+<p><code>setTimeout</code>这个函数，是经过指定时间后，把要执行的任务(本例中为<code>task()</code>)加入到Event Queue中，又因为是单线程任务要一个一个执行，如果前面的任务需要的时间太久，那么只能等着，导致真正的延迟时间远远大于3秒。</p>
+<p><code>setTimeout(fn,0)</code>的含义是，指定某个任务在主线程最早可得的空闲时间执行，意思就是不用再等多少秒了，只要主线程执行栈内的同步任务全部执行完成，栈为空就马上执行。即便主线程为空，0毫秒实际上也是达不到的。根据HTML的标准，最低是4毫秒。有兴趣的同学可以自行了解。</p>
+<h4 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval"></a>setInterval</h4><p><code>setInterval</code>会每隔指定的时间将注册的函数置入Event Queue，如果前面的任务耗时太久，那么同样需要等待。一旦**<code>setInterval</code>的回调函数<code>fn</code>执行时间超过了延迟时间<code>ms</code>，那么就完全看不出来有时间间隔了**。</p>
+<h3 id="Promise与process-nextTick-callback"><a href="#Promise与process-nextTick-callback" class="headerlink" title="Promise与process.nextTick(callback)"></a>Promise与process.nextTick(callback)</h3><p>宏任务 和 微任务</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;promise&#x27;</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;then&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;console&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>时间循环机制 先执行宏任务再执行微任务再执行宏任务</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;1&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   <span class="comment">//宏任务 setTimeout1</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;2&#x27;</span>);</span><br><span class="line">    process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  <span class="comment">//微任务 process2</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;3&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>)  </span></span><br><span class="line"><span class="function">        <span class="title">console</span>.<span class="title">log</span>(<span class="params"><span class="string">&#x27;4&#x27;</span></span>)</span>;</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   <span class="comment">//微任务 then2</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;5&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  <span class="comment">//微任务 process1   一轮 执行</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;6&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;7&#x27;</span>);</span><br><span class="line">    resolve();</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;      <span class="comment">//微任务 then1  一轮 执行</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;8&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;    <span class="comment">// 宏任务 setTimeout2</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;9&#x27;</span>);  </span><br><span class="line">    process.nextTick(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   <span class="comment">// 微任务process3</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;10&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>) </span>&#123;  </span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;11&#x27;</span>);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   <span class="comment">//微任务 then3</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;12&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>宏任务Event Queue</th>
+<th>微任务Event Queue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>setTimeout1</td>
+<td>process1</td>
+</tr>
+<tr>
+<td></td>
+<td>setTimeout2</td>
+<td>then1</td>
+</tr>
+</tbody></table>
+<p>第一轮 宏任务   1   7  微任务    6  8</p>
+<table>
+<thead>
+<tr>
+<th>宏任务Event Queue</th>
+<th>微任务Event Queue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setTimeout1</td>
+<td>process2</td>
+</tr>
+<tr>
+<td></td>
+<td>then2</td>
+</tr>
+</tbody></table>
+<p>第二轮 宏任务 2  4  微任务 3 5   </p>
+<table>
+<thead>
+<tr>
+<th>宏任务Event Queue</th>
+<th>微任务Event Queue</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setTimeout2</td>
+<td>process3</td>
+</tr>
+<tr>
+<td></td>
+<td>then3</td>
+</tr>
+</tbody></table>
+<p>第三轮  宏任务 9   11  微任务 10  12</p>
+<p>三次循环 1 7 6 8 2 4 3  5 9 11 10 12</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><ol>
+<li>js 是一门单线程语言，所有的异步都是同步模拟的</li>
+<li>事件循环是js实现异步的一种方法，也是js的执行机制</li>
+<li>执行js因环境不同而不同 运行js是指javascript解析引擎</li>
+<li>javascript是一门单线程语言</li>
+<li>Event Loop是javascript的执行机制</li>
+</ol>
+<p>​    </p>
+
       
     </div>
 
@@ -244,7 +325,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/26/index/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/12/index/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -258,7 +339,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/26/index/" class="post-title-link" itemprop="url">博客板块分类遐想</a>
+            <a href="/2021/08/12/index/" class="post-title-link" itemprop="url">博客板块分类遐想</a>
         </h2>
 
         <div class="post-meta">
@@ -268,7 +349,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-03-26 09:55:21" itemprop="dateCreated datePublished" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
+              <time title="创建时间：2021-08-12 06:55:38" itemprop="dateCreated datePublished" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -331,6 +412,72 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/26/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="张强">
+      <meta itemprop="description" content="不惟有超世之才，亦必有坚韧不拔之志">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="能文能武小小莱">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/26/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">图片测试</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-26 17:38:38" itemprop="dateCreated datePublished" datetime="2021-03-26T17:38:38+00:00">2021-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-12 06:55:38" itemprop="dateModified" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <img src="/2021/03/26/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/butiful.jpeg" class="" title="This is an example image">
+
+<img src="/2021/03/26/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/butifuln.jpeg" class="" title="This is an example image">
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/14/%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E7%BB%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -362,7 +509,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-26 09:55:21" itemprop="dateModified" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
+                <time title="修改时间：2021-08-12 06:55:38" itemprop="dateModified" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -492,7 +639,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-26 09:55:21" itemprop="dateModified" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
+                <time title="修改时间：2021-08-12 06:55:38" itemprop="dateModified" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -647,7 +794,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-26 09:55:21" itemprop="dateModified" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
+                <time title="修改时间：2021-08-12 06:55:38" itemprop="dateModified" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -845,7 +992,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-26 09:55:21" itemprop="dateModified" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
+                <time title="修改时间：2021-08-12 06:55:38" itemprop="dateModified" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -927,7 +1074,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-26 09:55:21" itemprop="dateModified" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
+                <time title="修改时间：2021-08-12 06:55:38" itemprop="dateModified" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1019,7 +1166,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-26 09:55:21" itemprop="dateModified" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
+                <time title="修改时间：2021-08-12 06:55:38" itemprop="dateModified" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1098,7 +1245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-26 09:55:21" itemprop="dateModified" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
+                <time title="修改时间：2021-08-12 06:55:38" itemprop="dateModified" datetime="2021-08-12T06:55:38+00:00">2021-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1198,151 +1345,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/02/git/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="张强">
-      <meta itemprop="description" content="不惟有超世之才，亦必有坚韧不拔之志">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="能文能武小小莱">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/02/git/" class="post-title-link" itemprop="url">git命令</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-02 23:04:12" itemprop="dateCreated datePublished" datetime="2020-11-02T23:04:12+00:00">2020-11-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-26 09:55:21" itemprop="dateModified" datetime="2021-03-26T09:55:21+00:00">2021-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">知识</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li><p>工作了很久，总结一下自己经常用到的命令，拓展一下不知道的git命令</p>
-<p>常用命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">git add .   (添加所有文件到缓存区)</span><br><span class="line">git commit -m &#39;你的描述&#39; （提交暂存区到仓库区）</span><br><span class="line">git push &#39;你要提交的分支代码&#39; （提交代码到远程）</span><br><span class="line"></span><br><span class="line">git remote -v 查看远程仓库</span><br><span class="line"></span><br><span class="line">git branch -a  查看所有分支</span><br><span class="line"></span><br><span class="line">git checkout -b &#39;分支&#39;   建立一个分支，并且切换到新建的分支</span><br><span class="line"></span><br><span class="line">git checkout &#39;分支&#39;  切换到某个已经有的分支</span><br><span class="line"></span><br><span class="line">git merge &#39;分支&#39;  将分支代码合并到当前工作的分支</span><br><span class="line"></span><br><span class="line">git status  查看当前状态</span><br><span class="line"></span><br><span class="line">git fetch [remote]  下载远程仓库的所有变动</span><br></pre></td></tr></table></figure>
-
-<p>以上就是经常用到的git命令</p>
-</li>
-<li><p>学一些不常用的</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//分支</span><br><span class="line">git branch [branch-name]  新建一个分支，但是还停留在当前分支</span><br><span class="line">git branch -r   列出所有远程分支</span><br><span class="line"></span><br><span class="line">// 删除</span><br><span class="line">git branch -d [branch-name]  删除本地分支</span><br><span class="line">git push origin --delete [branch-name]  删除远程分支</span><br><span class="line"></span><br><span class="line">// 查看</span><br><span class="line">git shortlog -sn    查看所有提交过代码的人，按照提交次数排序</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">撤销</span><br><span class="line">git reset [commit]  重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变</span><br><span class="line"></span><br><span class="line">git reset --hard [commit]   同时重置暂存区和工作区，与指定commit一致</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>大多数公司在提交的时候会设置上传的eslint检测，其实这个就是代码提交规范，涉及到了git，在这里写一下。作用嘛就是有利于快速查找到某个版本</p>
-<p>3.1 一般是 <strong>git commit -m ‘feat:做了什么样子的功能’</strong>  其他的类似</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">公式：&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br><span class="line"></span><br><span class="line">feat：新功能（feature）</span><br><span class="line">fix：修补bug</span><br><span class="line">docs：文档（documentation）</span><br><span class="line">style： 格式（不影响代码运行的变动）</span><br><span class="line">refactor：重构（即不是新增功能，也不是修改bug的代码变动）</span><br><span class="line">test：增加测试</span><br><span class="line">chore：构建过程或辅助工具的变动</span><br></pre></td></tr></table></figure>
-
-<h6 id="3-2-项目中使用"><a href="#3-2-项目中使用" class="headerlink" title="3.2 项目中使用"></a>3.2 项目中使用</h6><p><code>validate-commit-msg</code>  来检查项目中 <code>Commit message</code> 是否规范。</p>
-<ol>
-<li><pre><code>npm install --save-dev validate-commit-msg
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 方式一：建立 &#96;.vcmrc&#96; 文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-&#123;
-  &quot;types&quot;: [&quot;feat&quot;, &quot;fix&quot;, &quot;docs&quot;, &quot;style&quot;, &quot;refactor&quot;, &quot;perf&quot;, &quot;test&quot;, &quot;build&quot;, &quot;ci&quot;, &quot;chore&quot;, &quot;revert&quot;],
-  &quot;scope&quot;: &#123;
-    &quot;required&quot;: false,
-    &quot;allowed&quot;: [&quot;*&quot;],
-    &quot;validate&quot;: false,
-    &quot;multiple&quot;: false
-  &#125;,
-  &quot;warnOnFail&quot;: false,
-  &quot;maxSubjectLength&quot;: 100,
-  &quot;subjectPattern&quot;: &quot;.+&quot;,
-  &quot;subjectPatternErrorMsg&quot;: &quot;subject does not match subject pattern!&quot;,
-  &quot;helpMessage&quot;: &quot;&quot;,
-  &quot;autoFix&quot;: false
-&#125;
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">3. 使用方式二：写入 &#96;package.json&#96;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-&#123;
-  &quot;config&quot;: &#123;
-    &quot;validate-commit-msg&quot;: &#123;
-      /* your config here */
-    &#125;
-  &#125;
-&#125;
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4. &#96;validate-commit-msg&#96; 插件地址</span><br><span class="line"></span><br><span class="line">   https:&#x2F;&#x2F;github.com&#x2F;conventional-changelog-archived-repos&#x2F;validate-commit-msg</span><br><span class="line"></span><br><span class="line">5. ghooks 钩子</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-&#123;
-  …
-  &quot;config&quot;: &#123;
-    &quot;ghooks&quot;: &#123;
-      &quot;pre-commit&quot;: &quot;gulp lint&quot;,
-      &quot;commit-msg&quot;: &quot;validate-commit-msg&quot;,
-      &quot;pre-push&quot;: &quot;make test&quot;,
-      &quot;post-merge&quot;: &quot;npm install&quot;,
-      &quot;post-rewrite&quot;: &quot;npm install&quot;,
-      …
-    &#125;
-  &#125;
-  …
-&#125;
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. ###### 生成 Change log</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-npm install -g conventional-changelog
-cd jartto-domo
-conventional-changelog -p angular -i CHANGELOG.md -w
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">为了方便使用，可以将其写入 &#96;package.json&#96; 的 &#96;scripts&#96; 字段。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-&#123;
-  &quot;scripts&quot;: &#123;
-    &quot;changelog&quot;: &quot;conventional-changelog -p angular -i CHANGELOG.md -w -r 0&quot;
-  &#125;
-&#125;
-
-npm run changelog</code></pre>
-</li>
-</ol>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1414,7 +1416,7 @@ npm run changelog</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1427,7 +1429,7 @@ npm run changelog</code></pre>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
