@@ -31,5 +31,5 @@ Support for password authentication was removed on August 13, 2021. Please use a
 
    然后你就可以正常的玩耍了。
 
-7. 如果你此时你有使用Travis-ci 打包的代码，此时应该修改。
+7. 如果你此时你有使用Travis-ci 打包的代码，此时应该修改你的access token。
 
