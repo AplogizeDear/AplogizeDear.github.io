@@ -1,7 +1,6 @@
 ---
-layout: []
 title: github启用 personal access token后，历史项目如何进行认证变更
-date: 2021-08-14 10:18:13
+date: 2021-08-11 10:18:13
 tags:
 ---
 
