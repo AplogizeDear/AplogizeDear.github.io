@@ -1,7 +1,7 @@
 ---
 layout: [知识]
 title: npm cnpm pnom yarn 区别
-date: 2021-08-11 13:59:26
+date: 2021-08-10 13:59:26
 tags: 知识
 ---
 ## npx npm yarn cnpm的区别
