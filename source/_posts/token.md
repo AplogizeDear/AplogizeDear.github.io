@@ -32,3 +32,14 @@ Support for password authentication was removed on August 13, 2021. Please use a
 
 7. 如果你此时你有使用Travis-ci 打包的代码，此时应该修改你的access token。
 
+8. 这样有一个问题，就是你可能得一只输入账号和密码
+   通过下面这个命令能让你免受其扰
+
+   ```javascript
+    git config --edit
+    //然后找到这一段就可以了
+    [remote "origin"]
+        url = https://youusename:youtoken@github.com/yunzhiclub/repositoryname
+        fetch = +refs/heads/*:refs/remotes/origin/*
+   ```
+
